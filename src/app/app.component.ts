@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { SkypeSDKService } from './services/skype-sdk.service';
+import { SkypeSDKService } from './services/skype-sdk/skype-sdk.service';
 
 @Component({
     selector: 'app-root',
