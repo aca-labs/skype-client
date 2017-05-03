@@ -1,7 +1,7 @@
 /// <reference path="skype-sdk.d.ts" />
 
 import { Injectable } from '@angular/core';
-import { inject } from '../../util/script-loader';
+import { inject } from './util/script-loader';
 import * as config from './config';
 
 
