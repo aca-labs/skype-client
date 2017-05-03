@@ -2,7 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { inject } from '../../util/script-loader';
-import config from './skype-sdk.config';
+import * as config from './config';
 
 
 @Injectable()

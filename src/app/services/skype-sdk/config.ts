@@ -11,13 +11,10 @@ const apiKeys = {
     }
 };
 
-export default {
 
-    // URL provided from https://msdn.microsoft.com/en-us/skype/websdk/docs/gettingstarted
-    bootstrapURL: 'https://swx.cdn.skype.com/shared/v/1.2.15/SkypeBootstrap.min.js',
+// URL provided from https://msdn.microsoft.com/en-us/skype/websdk/docs/gettingstarted
+export const bootstrapURL = 'https://swx.cdn.skype.com/shared/v/1.2.15/SkypeBootstrap.min.js';
 
-    // Key to use in the app's SDK instance
-    // TODO: switch this to GA when appropriate feature set is available
-    apiKey: apiKeys.preview.sdk
-
-};
+// Key to use in the app's SDK instance
+// TODO: switch this to GA when appropriate feature set is available
+export const apiKey = apiKeys.preview.sdk;
