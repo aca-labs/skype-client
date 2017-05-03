@@ -9,47 +9,58 @@ import * as config from './config';
 export class SkypeSDKService {
 
     /**
-     * Skype SDK client instance this service is wrapping.
+     * Skype SDK instance this service is wrapping.
      */
     private _client: jCafe.Application;
 
     /**
-     * Lazy loader for the SDK instance.
-     *
-     * Note: due to the bootstrap and init process this is a Promise.
+     * Access the shared client instance wrapped by this service.
      */
     get client(): Promise<jCafe.Application> {
-        const createInstance = () => this.initialise(config.apiKey)
+        const existingClient = () => Promise.resolve(this._client);
+
+        const newClient = () => SkypeSDKService.createClient()
             .then(client => this._client = client);
 
-        return this._client ? Promise.resolve(this._client) : createInstance();
+        return this._client ? existingClient() : newClient();
     }
 
+    /**
+     * Create a new instance of the SDK. This may be used to spin up an
+     * arbitrary number of SDK instances which can operate simultaneously to
+     * support multiple concurrent users.
+     */
+    static createClient(): Promise<jCafe.Application> {
+        const bootstrap = () => SkypeSDKService.bootstrap(config.bootstrapURL);
 
-    initialise(apiKey: string): Promise<jCafe.Application> {
-        // Get the SkypeWebSDK bootstrapper
-        const bootstrap = (bootstrapURL: string) =>
-            new Promise<SkypeBootstrapper>((resolve, reject) => {
-                const sdk = () => (<any>window).Skype as SkypeBootstrapper;
-
-                if (sdk()) {
-                    resolve(sdk());
-                }
-
-                inject(bootstrapURL)
-                    .then(() => resolve(sdk()))
-                    .catch(() => reject('could not load Skype SDK from CDN'));
-            });
-
-        // Initialise a Skype SDK application instance
         const initClient = (sdk: SkypeBootstrapper) =>
-            new Promise<jCafe.Application>((resolve, reject) =>
-                sdk.initialize({apiKey: config.apiKey}, api => {
-                    const client = new api.application();
-                    resolve(client);
-                }, reject)
-            );
+            SkypeSDKService.initClient(sdk, config.apiKey);
 
-        return bootstrap(config.bootstrapURL).then(initClient);
+        return bootstrap().then(initClient);
     }
+
+    /**
+     * Load the SDK bootstrap script.
+     */
+    private static bootstrap = (bootstrapURL: string) =>
+        new Promise<SkypeBootstrapper>((resolve, reject) => {
+            // Script loads the SDK into a gloabl `window.Skype` variable
+            const sdk = () => (<any>window).Skype as SkypeBootstrapper;
+
+            const loadSDK = () => inject(bootstrapURL)
+                .then(() => resolve(sdk()))
+                .catch(() => reject('could not load Skype SDK from CDN'));
+
+            sdk() ? resolve(sdk()) : loadSDK();
+        });
+
+    /**
+     * Initialise an application instance on an SDK bootstrapper.
+     */
+    private static initClient = (sdk: SkypeBootstrapper, apiKey: string) =>
+        new Promise<jCafe.Application>((resolve, reject) =>
+            sdk.initialize({apiKey: apiKey},
+                           api => resolve(new api.application()),
+                           reject)
+        );
 }
