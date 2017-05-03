@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { SkypeSDKService } from './services/skype-sdk/skype-sdk.service';
+import { SERVICES } from './services';
 
 @NgModule({
     declarations: [
@@ -19,7 +19,7 @@ import { SkypeSDKService } from './services/skype-sdk/skype-sdk.service';
         AppRoutingModule
     ],
     providers: [
-        SkypeSDKService
+        ...SERVICES
     ],
     bootstrap: [AppComponent]
 })
