@@ -8,51 +8,66 @@ import * as config from './config';
 @Injectable()
 export class SkypeSDKService {
 
-    /**
-     * Skype SDK instance this service is wrapping.
-     */
-    private _client: jCafe.Application;
+    private static bootstrapper: Promise<SkypeBootstrapper>;
+
+    private clientInstance: Promise<jCafe.Application>;
 
     /**
      * Access the shared client instance wrapped by this service.
      */
     get client(): Promise<jCafe.Application> {
-        const existingClient = () => Promise.resolve(this._client);
+        if (!this.clientInstance) {
+            this.clientInstance = SkypeSDKService.createClient();
+        }
 
-        const newClient = () => SkypeSDKService.createClient()
-            .then(client => this._client = client);
-
-        return this._client ? existingClient() : newClient();
+        return this.clientInstance;
     }
 
     /**
-     * Create a new instance of the SDK. This may be used to spin up an
-     * arbitrary number of SDK instances which can operate simultaneously to
-     * support multiple concurrent users.
+     * Create a new instance of the SDK.
+     *
+     * This may be used to spin up an arbitrary number of SDK instances which
+     * can operate simultaneously to support multiple concurrent users.
      */
     static createClient(): Promise<jCafe.Application> {
         const bootstrap = () => SkypeSDKService.bootstrap(config.bootstrapURL);
 
-        const initClient = (sdk: SkypeBootstrapper) =>
+        const init = (sdk: SkypeBootstrapper) =>
             SkypeSDKService.initClient(sdk, config.apiKey);
 
-        return bootstrap().then(initClient);
+        return bootstrap().then(init);
     }
 
     /**
      * Load the SDK bootstrap script.
      */
-    private static bootstrap = (bootstrapURL: string) =>
-        new Promise<SkypeBootstrapper>((resolve, reject) => {
-            // Script loads the SDK into a gloabl `window.Skype` variable
-            const sdk = () => (<any>window).Skype as SkypeBootstrapper;
+    private static bootstrap(bootstrapURL: string): Promise<SkypeBootstrapper> {
+        type Maybe<T> = () => T | undefined;
 
-            const loadSDK = () => inject(bootstrapURL)
-                .then(() => resolve(sdk()))
-                .catch(() => reject('could not load Skype SDK from CDN'));
+        // The bootstrap script loads the SDK into a gloabl scope.
+        const bootstrapper: Maybe<SkypeBootstrapper> = () => (<any>window).Skype;
 
-            sdk() ? resolve(sdk()) : loadSDK();
-        });
+        // Load the bootstrap script and resolve the shiny new bootstrapper.
+        const load = () =>
+            new Promise<SkypeBootstrapper>((resolve, reject) => {
+                const success = () => resolve(bootstrapper());
+
+                const error = reason =>
+                    reject(`could not load Skype SDK from CDN: ${reason}`);
+
+                inject(bootstrapURL)
+                    .then(success)
+                    .catch(error);
+            });
+
+        // Store a reference to a loaded bootstrapper for future use.
+        const store = (sdk: Promise<SkypeBootstrapper>) =>
+            SkypeSDKService.bootstrapper = sdk;
+
+        const loadAndStoreSDK = () => store(load());
+
+        return SkypeSDKService.bootstrapper || loadAndStoreSDK();
+    }
 
     /**
      * Initialise an application instance on an SDK bootstrapper.
@@ -62,5 +77,5 @@ export class SkypeSDKService {
             sdk.initialize({apiKey: apiKey},
                            api => resolve(new api.application()),
                            reject)
-        );
+        )
 }
