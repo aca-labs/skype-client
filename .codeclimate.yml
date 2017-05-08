@@ -10,7 +10,7 @@ engines:
   fixme:
     enabled: true
   tslint:
-    enabled: false
+    enabled: true
     channel: beta
 ratings:
   paths:
