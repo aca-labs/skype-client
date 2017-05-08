@@ -6,7 +6,7 @@ interface RenderConversationArgs {
 }
 
 interface API {
-    application: { new (args?): jCafe.Application };
+    application: { new (args?: any): jCafe.Application };
     UIApplicationInstance: jCafe.Application;
     renderConversation(container: string | HTMLElement, args: RenderConversationArgs): jCafe.Promise<jCafe.Conversation>;
 }
@@ -15,5 +15,5 @@ interface SkypeBootstrapper {
     initialize(
         args: { apiKey: string },
         onSuccess: (api: API) => void,
-        onFailure?: (err) => void): any;
+        onFailure?: (err: any) => void): any;
 }

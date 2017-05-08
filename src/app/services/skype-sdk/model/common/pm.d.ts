@@ -20,11 +20,11 @@ declare module jCafe {
 
         /** Requests to change the value and returns a promise
             that gets resolved after the value is changed. */
-        set: Command<(value: T, reason?) => Promise<void>>;
+        set: Command<(value: T, reason?: any) => Promise<void>>;
 
         /** This event is fired whenever the property's value gets changed.
             The parameters are (new value, reason, old value). */
-        changed: Event<(newValue: T, reason, oldValue: T) => void>;
+        changed: Event<(newValue: T, reason: any, oldValue: T) => void>;
 
         /** The reason why the property has this value.
             It can be changed by the .set(...) function. */
@@ -40,7 +40,7 @@ declare module jCafe {
 
         /** Creates a property with customized .set method.
             The set function can be passed as a command. */
-        fork(set: (value: T, reason?) => Promise<T> | T): Property<T>;
+        fork(set: (value: T, reason?: any) => Promise<T> | T): Property<T>;
 
         /**
          * Creates a property which value is derived from this property's value.
@@ -217,12 +217,12 @@ declare module jCafe {
     /**
      * Command is a function that has an enabled property.
      */
-    export type Command<Signature extends (...args) => any> = Signature & {
+    export type Command<Signature extends (...args: any[]) => any> = Signature & {
         enabled: Property<boolean>;
-        bind(that, ...args): Command<(...args) => any>;
+        bind(that: any, ...args: any[]): Command<(...args: any[]) => any>;
     }
 
-    interface Event<Listener extends (...args) => void> {
+    interface Event<Listener extends (...args: any[]) => void> {
         /** Adds a listener to the event. */
         (listener: Listener): { dispose: () => void };
         /** Removes a listener from the event. */

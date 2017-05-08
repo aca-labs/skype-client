@@ -98,7 +98,7 @@ declare module jCafe {
          *          }
          *      });
          */
-        signIn: Command<(options) => Promise<void>>;
+        signIn: Command<(options: any) => Promise<void>>;
 
         /**
          * Signs out by deleting the application resource.
