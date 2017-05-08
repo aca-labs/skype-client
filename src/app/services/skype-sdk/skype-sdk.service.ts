@@ -44,21 +44,16 @@ export class SkypeSDKService {
     private static bootstrap(bootstrapURL: string): Promise<SkypeBootstrapper> {
         type Maybe<T> = () => T | undefined;
 
-        // The bootstrap script loads the SDK into a gloabl scope.
+        // The bootstrap script loads the SDK into gloabl scope.
         const bootstrapper: Maybe<SkypeBootstrapper> = () => (<any>window).Skype;
 
         // Load the bootstrap script and resolve the shiny new bootstrapper.
         const load = () =>
-            new Promise<SkypeBootstrapper>((resolve, reject) => {
-                const success = () => resolve(bootstrapper());
-
-                const error = reason =>
-                    reject(`could not load Skype SDK from CDN: ${reason}`);
-
+            new Promise<SkypeBootstrapper>((resolve, reject) =>
                 inject(bootstrapURL)
-                    .then(success)
-                    .catch(error);
-            });
+                    .then(() => resolve(bootstrapper()))
+                    .catch(() => reject('could not load Skype SDK from CDN'))
+            );
 
         // Store a reference to a loaded bootstrapper for future use.
         const store = (sdk: Promise<SkypeBootstrapper>) =>

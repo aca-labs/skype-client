@@ -1,9 +1,8 @@
 /**
  * Inject a script from a remote host (e.g. from a CDN) into the DOM.
  */
-export function inject(scriptUrl: string): Promise<any> {
+export function inject(scriptUrl: string): Promise<Event> {
     return new Promise((resolve, reject) => {
-        const insertionPoint = document.getElementsByTagName('script')[0];
         const script = document.createElement('script');
 
         script.type = 'text/javascript';
@@ -12,6 +11,6 @@ export function inject(scriptUrl: string): Promise<any> {
         script.onload = resolve;
         script.onerror = script.onabort = reject;
 
-        insertionPoint.parentNode.insertBefore(script, insertionPoint);
+        document.head.appendChild(script);
     });
 }
