@@ -58,7 +58,8 @@ declare module jCafe {
          * - if it is true, continue with the media related operations
          * - otherwise (undefined or false), do a get of this property
          * - when the get returns, if the value is true, continue with the media related operations
-         * - otherwise, check the isPluginInstalled.reason code, and provide the user with the URLs stored in the pluginDownloadLinks collection
+         * - otherwise, check the isPluginInstalled.reason code, and provide the
+         *   user with the URLs stored in the pluginDownloadLinks collection
          *
          * Here are some sample code:
          *

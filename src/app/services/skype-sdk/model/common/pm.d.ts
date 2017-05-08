@@ -22,6 +22,14 @@ declare module jCafe {
             that gets resolved after the value is changed. */
         set: Command<(value: T, reason?) => Promise<void>>;
 
+        /** This event is fired whenever the property's value gets changed.
+            The parameters are (new value, reason, old value). */
+        changed: Event<(newValue: T, reason, oldValue: T) => void>;
+
+        /** The reason why the property has this value.
+            It can be changed by the .set(...) function. */
+        reason: any;
+
         /**
          * Tells the property to keep its value up to date.
          * This may result in creating a subscription on the server.
@@ -70,14 +78,6 @@ declare module jCafe {
          */
         once(value: T | ((value: T) => boolean),
             fn: (reason: any, oldValue: T) => void): { dispose: () => void };
-
-        /** This event is fired whenever the property's value gets changed.
-            The parameters are (new value, reason, old value). */
-        changed: Event<(newValue: T, reason, oldValue: T) => void>;
-
-        /** The reason why the property has this value.
-            It can be changed by the .set(...) function. */
-        reason: any;
     }
 
     export interface Collection<T> {
@@ -107,8 +107,7 @@ declare module jCafe {
          */
         get: {
             (): Promise<T[]>;
-            (key: string): Promise<T>;
-            (index: number): Promise<T>;
+            (keyOrIndex: string | number): Promise<T>;
         };
 
         /** Adds a new item to the collection.
@@ -120,6 +119,18 @@ declare module jCafe {
         /** Removes an item from the collection.
             Returns a promise that resolves after the item is removed. */
         remove: Command<(item: T) => Promise<void>>;
+
+        /** This event is fired immediately after an item gets added.
+            The arguments are (item, key, index). */
+        added: Event<(item: T, key: string, index: number) => void>;
+
+        /** This event is fired immediately after an item gets removed.
+            The arguments are (item, key, index). */
+        removed: Event<(item: T, key: string, index: number) => void>;
+
+        /** This event is fired immediately after an item is added or removed.
+            The event doesn't have any arguments. */
+        changed: Event<() => void>;
 
         /**
          * Tells the collection to keep its data up to date.
@@ -190,18 +201,6 @@ declare module jCafe {
          * This works as long as the computed value doesn't depend on some external source.
          */
         reduce<U>(aggregate: (previous: U, current: T) => U, initialValue?: U): Property<U>;
-
-        /** This event is fired immediately after an item gets added.
-            The arguments are (item, key, index). */
-        added: Event<(item: T, key: string, index: number) => void>;
-
-        /** This event is fired immediately after an item gets removed.
-            The arguments are (item, key, index). */
-        removed: Event<(item: T, key: string, index: number) => void>;
-
-        /** This event is fired immediately after an item is added or removed.
-            The event doesn't have any arguments. */
-        changed: Event<() => void>;
     }
 
     export interface Promise<T> {
@@ -219,8 +218,8 @@ declare module jCafe {
      * Command is a function that has an enabled property.
      */
     export type Command<Signature extends (...args) => any> = Signature & {
-        bind(that, ...args): Command<(...args) => any>;
         enabled: Property<boolean>;
+        bind(that, ...args): Command<(...args) => any>;
     }
 
     interface Event<Listener extends (...args) => void> {

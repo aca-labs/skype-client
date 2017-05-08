@@ -14,10 +14,6 @@ declare module jCafe {
      * collection and can be resumed by starting any of the services
      */
     export interface Conversation {
-        /** Creates a participant model for a given person model.
-         *  Then the participant needs to be added to the collection.
-         */
-        createParticipant(person: Person): Participant;
 
         /** Participants that leave the conversation switch to the disconnected state,
          *  but remain in the collection.
@@ -99,5 +95,10 @@ declare module jCafe {
          * link, notifying UCWA not to mark the conversation as "missed".
          */
         acknowledge: Command<() => Promise<void>>;
+
+        /** Creates a participant model for a given person model.
+         *  Then the participant needs to be added to the collection.
+         */
+        createParticipant(person: Person): Participant;
     }
 }
