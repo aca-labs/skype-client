@@ -4,9 +4,9 @@ declare module jCafe {
      *  The relationship level for privacy relationship groups.
      *  The privacy relationship groups are created by server and typically
      *  there are five such groups. In certain cases, however, these groups
-     *  do not exist. 
+     *  do not exist.
      *
-     *       "None"                  // Non privacy relationship groups have 
+     *       "None"                  // Non privacy relationship groups have
      *                                  this value for RelationshipLevel.
      *       "Blocked"
      *       "Colleagues"

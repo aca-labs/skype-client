@@ -6,7 +6,7 @@ declare module jCafe {
         createParticipant(sipUri: string): Participant;
 
         /**
-         * A collection of extensions that provide channels for clients to 
+         * A collection of extensions that provide channels for clients to
          * send and receive data from the corresponding services
          */
         extensions: Collection<ConversationExtension>;

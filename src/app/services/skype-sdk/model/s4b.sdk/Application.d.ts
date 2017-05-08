@@ -11,7 +11,7 @@
 
 declare module jCafe {
     export interface Application {
-        /** 
+        /**
          * Allows to collect OII (organizational identifiable information)
          * such as FQDNs. OII doesn't include PII, which is the user's SIP
          * address, email or other data linkable to an individual user.

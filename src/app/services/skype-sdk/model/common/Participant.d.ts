@@ -9,9 +9,9 @@ declare module jCafe {
      *       "Leader"
      */
     export type ParticipantRole = string;
-    
+
     /**
-     *       "Disconnected" 
+     *       "Disconnected"
      *       "Connecting"
      *       "InLobby"
      *       "Connected"
@@ -48,16 +48,16 @@ declare module jCafe {
         role: Property<ParticipantRole>;
 
         /**
-         *  For the local participant this is the MePerson. 
+         *  For the local participant this is the MePerson.
          */
         person: Person;
-        
+
         chat: ParticipantChat;
         audio: ParticipantAudio;
         video: ParticipantVideo;
 
-        /** 
-         * Admits a remote participant into the online meeting. 
+        /**
+         * Admits a remote participant into the online meeting.
          * This is only enabled if the remote participant is waiting in the Lobby.
          *
          * To fetch the value of the `enabled` property once, use its `get` method:
@@ -66,8 +66,8 @@ declare module jCafe {
          *         participant.admit();
          *     });
          *
-         * This doesn't create any subscriptions, but if the actual value 
-         * of the property changes, the only way to get it on time is to 
+         * This doesn't create any subscriptions, but if the actual value
+         * of the property changes, the only way to get it on time is to
          * subscribe to its `changed` event.
          */
         admit: Command<() => Promise<void>>;

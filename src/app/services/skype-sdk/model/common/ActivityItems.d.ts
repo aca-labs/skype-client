@@ -15,7 +15,7 @@ declare module jCafe {
      *
      *       "Pending"
      *       "Succeeded"
-     *       "Failed" 
+     *       "Failed"
      */
     export type ActivityStatus = string;
 
@@ -30,7 +30,6 @@ declare module jCafe {
      * A general purpose conversation activity item like a text message, a video call, etc.
      */
     export interface ConversationActivityItem {
-        
         type: Property<ActivityType>;
         timestamp: Property<Date>;
         status: Property<ActivityStatus>;
@@ -39,10 +38,10 @@ declare module jCafe {
     export interface TextMessageActivityItem extends ConversationActivityItem {
         direction: Property<Direction>;
         sender: Person;
-        /** the text/plain representation of the message 
+        /** the text/plain representation of the message
             If the message is html only the sdk creates a text version of the message as well */
         text: Property<string>;
-        /** the text/html representation of the message 
+        /** the text/html representation of the message
             If the message is text only the sdk creates a html version of the message as well */
         html: Property<string>;
     }

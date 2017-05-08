@@ -2,9 +2,9 @@
 /// <reference path="SearchQuery.d.ts" />
 
 declare module jCafe {
-    
+
     export interface ConversationsManager {
-        /** 
+        /**
          * Here is a correct way to accept incoming IM invitations:
          *
          *     client.conversationsManager.conversations.added(conversation => {
@@ -37,7 +37,7 @@ declare module jCafe {
          */
         conversations: Collection<Conversation>;
 
-        /** To search for conversations create the search query, set search 
+        /** To search for conversations create the search query, set search
          * terms on the query object and execute the query's search method.
          *
          * var searchQuery = client.conversationsManager.createSearchQuery();
@@ -54,10 +54,10 @@ declare module jCafe {
         /**
          * Creates a new multiparty conversation model.
          *
-         * The created conversation model represents a new multiparty 
+         * The created conversation model represents a new multiparty
          * conversation (meeting).
-         * To start the conversation add participants (optionally) and start 
-         * one of the conversation services. If no participants are added, 
+         * To start the conversation add participants (optionally) and start
+         * one of the conversation services. If no participants are added,
          * the model represents a meeting that is joined by the local participant only.
          * This method adds the created conversation to the conversations collection.
          *
@@ -67,19 +67,19 @@ declare module jCafe {
          *     conversation.chatService.start().then(() => {
          *         console.log("chat started");
          *     });
-         *      
+         *
          */
         createConversation(): Conversation;
 
         /**
          * Finds an existing 1:1 conversation model or creates a new one.
          *
-         * This method finds or creates a conversation with a given Person. 
-         * Our API allows multiple 1:1 conversations with the same person, 
-         * so while looking for an existing conversation we simply pick the 
-         * first one found among such ongoing conversations. We ignore 
+         * This method finds or creates a conversation with a given Person.
+         * Our API allows multiple 1:1 conversations with the same person,
+         * so while looking for an existing conversation we simply pick the
+         * first one found among such ongoing conversations. We ignore
          * disconnected (ended) conversations that may still linger in the
-         * conversations collection. This method adds the newly created 
+         * conversations collection. This method adds the newly created
          * conversation to the conversations collection.
          */
         getConversation(person: Person): Conversation;
@@ -87,24 +87,24 @@ declare module jCafe {
         /**
          * Finds an existing multiparty conversation model or creates a new one.
          *
-         * A conversation uri has a meaning only for a multiparty conversation 
+         * A conversation uri has a meaning only for a multiparty conversation
          * - it is a meeting uri.
-         * A conversation model with such a uri represents the client's view 
-         * of this meeting. Note that initially such a model is just an empty 
-         * conversation model which has a non-null uri property; the client joins 
-         * the meeting only when one of the conversation services is started. 
-         * This method adds the newly created conversation to the conversations 
+         * A conversation model with such a uri represents the client's view
+         * of this meeting. Note that initially such a model is just an empty
+         * conversation model which has a non-null uri property; the client joins
+         * the meeting only when one of the conversation services is started.
+         * This method adds the newly created conversation to the conversations
          * collection.
          */
         getConversationByUri(uri: string): Conversation;
 
-        /** 
+        /**
          *  Fetch the next batch of conversations after the latest item downloaded by the client.
          *
          *  This method can be used for scrolling through recent conversations history.
          *  Note that conversations are received in order how they were updated.
          *  Conversations already received by previous calls will not be received again.
-         *  Command will be disabled when there are no more conversation on server available. 
+         *  Command will be disabled when there are no more conversation on server available.
          */
         getMoreConversations: Command<(count?: number) => Promise<void>>;
 

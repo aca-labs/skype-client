@@ -15,7 +15,7 @@ declare module jCafe {
      * each other via the UCWA protocol.
      */
     export interface Application {
-        
+
         personsAndGroupsManager: PersonsAndGroupsManager;
         conversationsManager: ConversationsManager;
         devicesManager: DevicesManager;

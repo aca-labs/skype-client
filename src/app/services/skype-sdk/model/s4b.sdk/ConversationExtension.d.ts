@@ -8,7 +8,7 @@ declare module jCafe {
         content: Property<any>;
 
         /**
-         * The type of the content property as specified by the service 
+         * The type of the content property as specified by the service
          * The sdk does not infer the type from the content, it simply passes
          * along what is provided to it
          */
@@ -22,7 +22,7 @@ declare module jCafe {
          * @param content Any content in a string format. The SDK just passes it along.
          * @param contentType A mime type identifying the type of content. Non standard
          * mime types are acceptable here since the SDK just passes it along.
-         * 
+         *
          * @returns An object with content and contentType values obtained from the ConversationExtensionResult's 'result' link.
          */
         sendData: Command<(content: string, contentType: string) => Promise<{ content: any, contentType: string }>>;

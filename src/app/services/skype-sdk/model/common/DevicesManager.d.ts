@@ -3,28 +3,28 @@
 
 declare module jCafe {
 
-    /** 
+    /**
      *       "Camera"
      *       "Microphone"
-     *       "Speaker" 
+     *       "Speaker"
      */
     export type DeviceType = string;
-    
+
     export interface Device {
 
         id: Property<string>;
         name: Property<string>;
         type: Property<DeviceType>;
     }
-    
+
     export interface Camera extends Device {
         /** Use this channel to preview video from this camera */
         localVideoChannel: VideoChannel;
     }
-    
+
     export interface Microphone extends Device {
     }
-    
+
     /** Can be selected only when the plugin is used */
     export interface Speaker extends Device {
     }
@@ -135,7 +135,7 @@ declare module jCafe {
      * Holds collections of audio and video devices.
      */
     export interface DevicesManager {
-        
+
         selectedCamera: Property<Camera>;
         selectedMicrophone: Property<Microphone>;
         selectedSpeaker: Property<Speaker>;

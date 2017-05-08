@@ -21,9 +21,9 @@ declare module jCafe {
         /** The URL that is used when the online meeting is joined from the web. */
         joinUrl: Property<string>;
 
-        /** 
+        /**
          * Identifies this meeting among the other online meetings that are scheduled by the organizer.
-         * The online meeting ID is unique within the organizer's list of scheduled online meetings. 
+         * The online meeting ID is unique within the organizer's list of scheduled online meetings.
          */
         onlineMeetingId: Property<string>;
 
@@ -83,7 +83,7 @@ declare module jCafe {
         /** When enabled phone users will skip the meeting lobby. */
         lobbyBypassForPhoneUsers: Property<string>;
 
-        /** 
+        /**
          * Whether participants can join the online meeting over the phone.
          *
          * Setting this property to true means that online meeting participants can join the meeting

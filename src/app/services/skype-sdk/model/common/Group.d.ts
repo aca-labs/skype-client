@@ -6,7 +6,7 @@ declare module jCafe {
      *       "Custom"                // A user-created group with a custom name.
      *       "Others"                // Persons that do not belong to custom groups.
      *       "Favorites"             // Frequently contacted persons.
-     *       "Distribution"          // Created by admins of the organization 
+     *       "Distribution"          // Created by admins of the organization
      *                                  and contain persons and other DGs.
      *       "PrivacyRelationship"   // One of five privacy relationship groups.
      */
@@ -44,10 +44,10 @@ declare module jCafe {
         type: Property<GroupType>;
 
         /**
-         * This property is defined for user-created, server-created and 
+         * This property is defined for user-created, server-created and
          * distribution groups.
          *
-         * There are two predefined groups created by the server, with the 
+         * There are two predefined groups created by the server, with the
          * following names:
          *        - Other Contacts
          *        - Pinned Contacts

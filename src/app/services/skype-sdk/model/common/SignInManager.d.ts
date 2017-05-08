@@ -9,7 +9,7 @@ declare module jCafe {
      *       "SigningOut"
      */
     export type LoginState = string;
-    
+
     export interface SignInManager {
         /**
          * The following code can be used to invoke a particular function whenever
@@ -34,24 +34,24 @@ declare module jCafe {
         /**
          * Signs in a user with given credentials.
          *
-         * To sign in via the basic auth, specify the user name and password in 
+         * To sign in via the basic auth, specify the user name and password in
          * plain text:
          *
          *     sm.signIn({
          *         username: 'user1@company.com',
          *         password: 'password1'
          *     }).then(() => {
-         *         console.log('Signed in as ' + 
+         *         console.log('Signed in as ' +
          *              client.personsAndGroupsManager.mePerson.name());
          *     });
          *
-         * To sign in via IWA and make the browser show a credentials popup 
+         * To sign in via IWA and make the browser show a credentials popup
          * specify the domain FQDN:
          *
          *     sm.signIn({
          *         domain: 'company.com'
          *     }).then(() => {
-         *         console.log('Signed in as ' + 
+         *         console.log('Signed in as ' +
          *              client.personsAndGroupsManager.mePerson.name());
          *     });
          *
@@ -60,7 +60,7 @@ declare module jCafe {
          *     sm.signIn({
          *         meeting: "sip:user5@contoso.com;gruu;opaque=app:conf:focus:id:QHJ72TKK"
          *     }).then(() => {
-         *         console.log("Signed in as " + 
+         *         console.log("Signed in as " +
          *              client.personsAndGroupsManager.mePerson.uri());
          *     });
          *
@@ -84,15 +84,15 @@ declare module jCafe {
          *         password: "password1",
          *         id: "273867-234235-45346345634-345"
          *     });
-         * 
+         *
          * To sign in to Skype for Business Online using OAuth while handling the logic of retrieving OAuth tokens yourself:
-         * 
+         *
          *      sm.signIn({
          *          client_id: '123-456',
          *          origins: [ 'https://webdir.online.lync.com/AutoDiscover/AutoDiscoverservice.svc/root' ],
          *          cors: true,
          *          get_oauth_token: function(resource) {
-         *              // Return a valid unexpired token for the specified resource if you already have one. 
+         *              // Return a valid unexpired token for the specified resource if you already have one.
          *              // Else, return a promise and resolve it once you have obtained a token.
          *              return 'Bearer eyJ0e...';
          *          }

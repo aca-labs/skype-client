@@ -5,12 +5,12 @@
 declare module jCafe {
 
     /**
-     * It holds a root group, which contains the list of all clients and groups 
+     * It holds a root group, which contains the list of all clients and groups
      * known to the client.
      */
     export interface PersonsAndGroupsManager {
 
-        /** 
+        /**
          * Represents signed in user.
          * Here is a correct way to display the availability state of the user:
          *
@@ -28,8 +28,8 @@ declare module jCafe {
         /**
          * The root group contains a list of all contacts and groups.
          *
-         * This is the root group contains 'persons' as  a collection  of all 
-         * contacts, and 'groups' as a collection of all groups (user-created 
+         * This is the root group contains 'persons' as  a collection  of all
+         * contacts, and 'groups' as a collection of all groups (user-created
          * groups, server created groups and relationship groups).
          */
         all: Group;
@@ -76,14 +76,14 @@ declare module jCafe {
         */
         createGroupSearchQuery(): SearchQuery<Group>;
 
-        /** 
+        /**
          * Creates a group which can be then added to another group.
          *
          * The created group must be given a unique name first:
-         * 
+         *
          *  var g = pgm.createGroup();
          *  g.name("ABC");
-         *  pgm.all.groups.add(g); 
+         *  pgm.all.groups.add(g);
          */
         createGroup(): Group;
     }

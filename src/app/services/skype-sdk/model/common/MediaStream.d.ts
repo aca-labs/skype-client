@@ -8,16 +8,16 @@ declare module jCafe {
      *       'Stopped'
      */
     export type MediaStreamState = string;
-    
+
     /**
      *
-     *      "Fit"        // resize the video frame to fit the container window 
-     *                      without changing the frame aspect ratio;  this can 
+     *      "Fit"        // resize the video frame to fit the container window
+     *                      without changing the frame aspect ratio;  this can
      *                      cause black bars around the video (letterboxing)
-     *      "Crop"       // crop the video frame to occupy the entire container 
+     *      "Crop"       // crop the video frame to occupy the entire container
      *                      window without changing the frame aspect ratio
-     *      "Stretch"    // stretch the video frame to occupy the entire 
-     *                      container window; changes the video frame aspect 
+     *      "Stretch"    // stretch the video frame to occupy the entire
+     *                      container window; changes the video frame aspect
      *                      ratio potentially distorting the image
      */
     export type VideoFormat = string;
@@ -60,24 +60,24 @@ declare module jCafe {
      *
      *      var container = conversation.participant(0).video.channels(0).stream.source.sink.container;
      *      container(null); // to hide video
-     *      container(document.getElementById(‘videoContainer1’)); // to show video
+     *      container(document.getElementById(ï¿½videoContainer1ï¿½)); // to show video
      */
     export interface StreamSink {
         container: Property<HTMLElement>;
         format: Property<VideoFormat>;
     }
 
-    /** 
+    /**
      * Media stream source is used for stream rendering.
      *
      * Every stream source has one sink which defines
-     * a container where video should be rendered 
+     * a container where video should be rendered
      */
     export interface MediaStreamSource {
         sink: StreamSink
     }
 
-    /** The participant media stream may represent participant's video 
+    /** The participant media stream may represent participant's video
         or screen sharing streams. */
     export interface MediaStream {
         state: Property<MediaStreamState>;
@@ -85,13 +85,13 @@ declare module jCafe {
         /** Presents this stream for rendering.  */
         source: MediaStreamSource;
 
-        /** Width of video resolution (for video) or shared area rectangle 
-         * (for screen sharing) 
+        /** Width of video resolution (for video) or shared area rectangle
+         * (for screen sharing)
          */
         width: Property<number>;
 
-        /** Height of video resolution (for video) or shared area rectangle 
-         * (for screen sharing) 
+        /** Height of video resolution (for video) or shared area rectangle
+         * (for screen sharing)
          */
         height: Property<number>;
     }
